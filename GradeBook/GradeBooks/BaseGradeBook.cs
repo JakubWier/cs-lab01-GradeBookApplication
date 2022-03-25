@@ -23,6 +23,13 @@ namespace GradeBook.GradeBooks
             IsWeighted = isWeighted;
         }
 
+        static double GetBonusGPA(StudentType studentType) => studentType switch
+        {
+            StudentType.Honors => 1,
+            StudentType.DualEnrolled => 1,
+            StudentType.Standard => 0,
+        };
+
         public void AddStudent(Student student)
         {
             if (string.IsNullOrEmpty(student.Name))
@@ -109,20 +116,17 @@ namespace GradeBook.GradeBooks
 
         public virtual double GetGPA(char letterGrade, StudentType studentType)
         {
-            switch (letterGrade)
+            double GPA = letterGrade switch
             {
-                case 'A':
-                    return 4;
-                case 'B':
-                    return 3;
-                case 'C':
-                    return 2;
-                case 'D':
-                    return 1;
-                case 'F':
-                    return 0;
-            }
-            return 0;
+                'A' => 4,
+                'B' => 3,
+                'C' => 2,
+                'D' => 1,
+                _ => 0
+            };
+
+            GPA += GetBonusGPA(studentType);
+            return GPA;
         }
 
         public virtual void CalculateStatistics()
