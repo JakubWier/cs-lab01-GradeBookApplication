@@ -36,11 +36,15 @@ namespace GradeBook.UserInterfaces
             var parts = command.Split(' ');
             if (parts.Length != 4)
             {
-                Console.WriteLine("Command not valid, Create requires a name.");
+                Console.WriteLine("Command not valid, Create requires a name, type of gradebook, if it's weighted (true / false).");
                 return null;
             }
             var name = parts[1];
-            var isWeighted = parts[3] == "true";
+
+            bool isWeighted;
+            if(!bool.TryParse(parts[3], out isWeighted))
+                Console.WriteLine("Command not valid, Create requires a name, type of gradebook, if it's weighted (true / false).");
+
             Console.WriteLine("Created gradebook {0}.", name);
             BaseGradeBook gradeBook;
 
@@ -81,7 +85,7 @@ namespace GradeBook.UserInterfaces
             Console.WriteLine();
             Console.WriteLine("GradeBook accepts the following commands:");
             Console.WriteLine();
-            Console.WriteLine("Create 'Name' 'Type' - Creates a new gradebook where 'Name' is the name of the gradebook and 'Type' is what type of grading it should use.");
+            Console.WriteLine("create 'name' 'type' 'weighted' - creates a new gradebook where 'name' is the name of the gradebook, 'type' is what type of grading it should use, and 'weighted' is whether or not grades should be weighted (true or false).");
             Console.WriteLine();
             Console.WriteLine("Load 'Name' - Loads the gradebook with the provided 'Name'.");
             Console.WriteLine();

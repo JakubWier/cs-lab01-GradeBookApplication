@@ -27,7 +27,7 @@ namespace GradeBook.GradeBooks
         {
             StudentType.Honors => 1,
             StudentType.DualEnrolled => 1,
-            StudentType.Standard => 0,
+            StudentType.Standard => 0
         };
 
         public void AddStudent(Student student)
@@ -125,7 +125,8 @@ namespace GradeBook.GradeBooks
                 _ => 0
             };
 
-            GPA += GetBonusGPA(studentType);
+            if (IsWeighted)
+                GPA += GetBonusGPA(studentType);
             return GPA;
         }
 
